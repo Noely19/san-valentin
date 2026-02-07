@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>San Valentín 💖</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -18,13 +19,14 @@ body{
 .view{
     position:absolute;
     width:100%;
-    height:100vh;
+    height:100dvh;
     display:none;
     justify-content:center;
     align-items:center;
     flex-direction:column;
     color:white;
     text-align:center;
+    padding:20px;
 }
 .view.active{display:flex}
 
@@ -56,8 +58,10 @@ body{
     100%{background-position:0% 50%}
 }
 
-h1{font-size:52px}
-p{font-size:18px; opacity:.9}
+/* TEXTOS RESPONSIVE */
+h1{font-size:clamp(28px,7vw,52px)}
+h2{font-size:clamp(18px,5vw,32px)}
+p{font-size:clamp(14px,4vw,18px); opacity:.9}
 
 /* CORAZONES */
 .heart{
@@ -75,7 +79,7 @@ p{font-size:18px; opacity:.9}
 /* EMOJIS NO */
 .no-emoji{
     position:absolute;
-    font-size:26px;
+    font-size:24px;
     animation:noFloat 2s ease-out forwards;
 }
 @keyframes noFloat{
@@ -85,7 +89,7 @@ p{font-size:18px; opacity:.9}
 
 /* CORAZÓN GRANDE */
 .big-heart{
-    font-size:120px;
+    font-size:clamp(80px,20vw,120px);
     animation:beat 1.2s infinite;
 }
 @keyframes beat{
@@ -97,9 +101,9 @@ p{font-size:18px; opacity:.9}
 .card{
     background:white;
     color:#ff4d6d;
-    padding:30px;
+    padding:24px;
     border-radius:20px;
-    width:80%;
+    width:100%;
     max-width:420px;
     animation:appear 1.5s ease;
 }
@@ -111,34 +115,45 @@ p{font-size:18px; opacity:.9}
 /* RETRO */
 .retro-box{
     background:#fffaf5;
-    border:6px solid #ff5fa2;
-    border-radius:20px;
-    padding:30px 20px;
-    width:90%;
-    max-width:420px;
+    border:5px solid #ff5fa2;
+    border-radius:18px;
+    padding:24px 16px;
+    width:100%;
+    max-width:360px;
     font-family:'Press Start 2P', cursive;
     color:#ff4d6d;
 }
 .retro-box h2{
-    font-size:16px;
-    margin-bottom:30px;
+    font-size:clamp(12px,3.5vw,16px);
+    margin-bottom:24px;
 }
 .retro-buttons{
     display:flex;
     justify-content:space-between;
-    width:260px;
-    margin:0 auto;
+    gap:16px;
 }
 .retro-btn{
-    width:100px;
-    height:45px;
+    flex:1;
+    height:48px;
     font-family:'Press Start 2P', cursive;
-    font-size:14px;
-    border:4px solid #000;
+    font-size:12px;
+    border:3px solid #000;
     cursor:pointer;
+    touch-action:manipulation;
 }
 .retro-yes{background:#3cff5f}
 .retro-no{background:#ff3b3b; position:relative}
+
+/* EXTRA PARA MÓVIL */
+@media (max-width:480px){
+    .retro-buttons{
+        gap:12px;
+    }
+    .retro-btn{
+        font-size:11px;
+        height:46px;
+    }
+}
 </style>
 </head>
 <body>
@@ -172,7 +187,8 @@ p{font-size:18px; opacity:.9}
         <h2>Gracias por aceptar 💘</h2>
         <p>
             Prometo hacer de este San Valentín  
-            algo especial, bonito y lleno de sonrisas.
+            algo especial, bonito.
+            ¡Te Amoooooo!!!❤️❤️❤️❤️❤️❤️
         </p>
         <p>❤️❤️❤️</p>
     </div>
@@ -184,21 +200,21 @@ function goTo(n){
     document.getElementById('v'+n).classList.add('active');
 
     if(n === 2){
-        setTimeout(()=>goTo(3), 3000);
+        setTimeout(()=>goTo(3), 2500);
     }
 }
 
 /* BOTÓN NO */
 const no = document.getElementById("no");
-no.addEventListener("mouseover", moverNo);
-no.addEventListener("click", () => {
+no.addEventListener("pointerdown", () => {
     moverNo();
     lanzarNoEmojis();
 });
 
 function moverNo(){
-    no.style.transform =
-        `translate(${Math.random()*120 - 60}px, ${Math.random()*40 - 20}px)`;
+    const x = Math.random()*80 - 40;
+    const y = Math.random()*40 - 20;
+    no.style.transform = `translate(${x}px, ${y}px)`;
 }
 
 /* EMOJIS DE NO */
@@ -217,17 +233,17 @@ function lanzarNoEmojis(){
 
 /* ACEPTAR */
 function aceptar(){
-    for(let i=0;i<45;i++){
+    for(let i=0;i<40;i++){
         explosionCorazones();
     }
-    setTimeout(()=>goTo(4), 800);
+    setTimeout(()=>goTo(4), 700);
 }
 
 function explosionCorazones(){
     const h=document.createElement("div");
     h.className="heart";
     h.innerHTML="❤️";
-    h.style.left=(50 + Math.random()*20 - 10)+"vw";
+    h.style.left=(50 + Math.random()*30 - 15)+"vw";
     h.style.bottom="40vh";
     h.style.animationDuration=(Math.random()*2+2)+"s";
     document.body.appendChild(h);
@@ -243,7 +259,7 @@ setInterval(()=>{
     h.style.animationDuration=(Math.random()*3+3)+"s";
     document.body.appendChild(h);
     setTimeout(()=>h.remove(),6000);
-},450);
+},500);
 </script>
 
 </body>
