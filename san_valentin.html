@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>San Valentín 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    overflow:hidden;
+}
+
+/* VISTAS */
+.view{
+    position:absolute;
+    width:100%;
+    height:100vh;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    color:white;
+    text-align:center;
+}
+.view.active{display:flex}
+
+/* FONDOS */
+#v1{
+    background:linear-gradient(-45deg,#2b0018,#4a0033,#7a004d);
+    background-size:400% 400%;
+    animation:bg 10s ease infinite;
+}
+#v2{
+    background:linear-gradient(-45deg,#ff758c,#ff7eb3,#ffc3a0);
+    background-size:400% 400%;
+    animation:bg 8s ease infinite;
+}
+#v3{
+    background:linear-gradient(-45deg,#ff4d6d,#ff85a1,#ffd6e0);
+    background-size:400% 400%;
+    animation:bg 8s ease infinite;
+}
+#v4{
+    background:linear-gradient(-45deg,#ff9a9e,#fecfef,#fad0c4);
+    background-size:400% 400%;
+    animation:bg 8s ease infinite;
+}
+
+@keyframes bg{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+h1{font-size:52px}
+p{font-size:18px; opacity:.9}
+
+/* CORAZONES */
+.heart{
+    position:absolute;
+    bottom:-20px;
+    font-size:24px;
+    animation:float 6s linear infinite;
+    opacity:.8;
+}
+@keyframes float{
+    from{transform:translateY(0)}
+    to{transform:translateY(-110vh); opacity:0}
+}
+
+/* EMOJIS NO */
+.no-emoji{
+    position:absolute;
+    font-size:26px;
+    animation:noFloat 2s ease-out forwards;
+}
+@keyframes noFloat{
+    from{transform:translateY(0); opacity:1}
+    to{transform:translateY(-80px); opacity:0}
+}
+
+/* CORAZÓN GRANDE */
+.big-heart{
+    font-size:120px;
+    animation:beat 1.2s infinite;
+}
+@keyframes beat{
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.2)}
+}
+
+/* CARTA */
+.card{
+    background:white;
+    color:#ff4d6d;
+    padding:30px;
+    border-radius:20px;
+    width:80%;
+    max-width:420px;
+    animation:appear 1.5s ease;
+}
+@keyframes appear{
+    from{transform:scale(0);opacity:0}
+    to{transform:scale(1);opacity:1}
+}
+
+/* RETRO */
+.retro-box{
+    background:#fffaf5;
+    border:6px solid #ff5fa2;
+    border-radius:20px;
+    padding:30px 20px;
+    width:90%;
+    max-width:420px;
+    font-family:'Press Start 2P', cursive;
+    color:#ff4d6d;
+}
+.retro-box h2{
+    font-size:16px;
+    margin-bottom:30px;
+}
+.retro-buttons{
+    display:flex;
+    justify-content:space-between;
+    width:260px;
+    margin:0 auto;
+}
+.retro-btn{
+    width:100px;
+    height:45px;
+    font-family:'Press Start 2P', cursive;
+    font-size:14px;
+    border:4px solid #000;
+    cursor:pointer;
+}
+.retro-yes{background:#3cff5f}
+.retro-no{background:#ff3b3b; position:relative}
+</style>
+</head>
+<body>
+
+<!-- VISTA 1 -->
+<div class="view active" id="v1" onclick="goTo(2)">
+    <h1>💖 San Valentín 💖</h1>
+    <p>Presiona la pantalla</p>
+</div>
+
+<!-- VISTA 2 -->
+<div class="view" id="v2">
+    <div class="big-heart">❤️</div>
+    <h2>Cargando amor...</h2>
+</div>
+
+<!-- VISTA 3 -->
+<div class="view" id="v3">
+    <div class="retro-box">
+        <h2>¿Quieres ser mi Valentine?</h2>
+        <div class="retro-buttons">
+            <button class="retro-btn retro-yes" onclick="aceptar()">Sí</button>
+            <button class="retro-btn retro-no" id="no">No</button>
+        </div>
+    </div>
+</div>
+
+<!-- VISTA 4 -->
+<div class="view" id="v4">
+    <div class="card">
+        <h2>Gracias por aceptar 💘</h2>
+        <p>
+            Prometo hacer de este San Valentín  
+            algo especial, bonito y lleno de sonrisas.
+        </p>
+        <p>❤️❤️❤️</p>
+    </div>
+</div>
+
+<script>
+function goTo(n){
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById('v'+n).classList.add('active');
+
+    if(n === 2){
+        setTimeout(()=>goTo(3), 3000);
+    }
+}
+
+/* BOTÓN NO */
+const no = document.getElementById("no");
+no.addEventListener("mouseover", moverNo);
+no.addEventListener("click", () => {
+    moverNo();
+    lanzarNoEmojis();
+});
+
+function moverNo(){
+    no.style.transform =
+        `translate(${Math.random()*120 - 60}px, ${Math.random()*40 - 20}px)`;
+}
+
+/* EMOJIS DE NO */
+function lanzarNoEmojis(){
+    const emojis = ["❌","🚫","💔","😵‍💫","🙅‍♀️","🙅‍♂️"];
+    for(let i=0;i<6;i++){
+        const e=document.createElement("div");
+        e.className="no-emoji";
+        e.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
+        e.style.left=(50 + Math.random()*20 - 10)+"vw";
+        e.style.top="55vh";
+        document.body.appendChild(e);
+        setTimeout(()=>e.remove(),2000);
+    }
+}
+
+/* ACEPTAR */
+function aceptar(){
+    for(let i=0;i<45;i++){
+        explosionCorazones();
+    }
+    setTimeout(()=>goTo(4), 800);
+}
+
+function explosionCorazones(){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=(50 + Math.random()*20 - 10)+"vw";
+    h.style.bottom="40vh";
+    h.style.animationDuration=(Math.random()*2+2)+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
+}
+
+/* CORAZONES CONSTANTES */
+setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(Math.random()*3+3)+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+},450);
+</script>
+
+</body>
+</html>
